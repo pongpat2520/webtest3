@@ -17,6 +17,12 @@ pipeline {
                 echo "No build step for static site"
             }
         }
+        stage('Run Docker Container') {
+            steps {
+                bat 'docker rm -f my-web || exit 0'
+                bat 'docker run -d --name my-web -p 8888:80 my-web-cicd'
+            }
+        }
         stage('Deploy') {
             steps {
                 script {
