@@ -1,14 +1,20 @@
 pipeline {
     agent any
+
+    environment {
+        GIT_REPO = 'https://github.com/pongpat2520/webtest3.git'
+    }
+
     stages {
         stage('Clone') {
             steps {
-                git 'https://github.com/pongpat2520/webtest3.git'
+                git url: "${GIT_REPO}", branch: 'main'
             }
         }
+
         stage('Build') {
             steps {
-                bat 'No build needed for static site'
+                echo "No build step for static site"
             }
         }
         stage('Deploy') {
