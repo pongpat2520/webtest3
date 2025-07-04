@@ -13,10 +13,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                sh ...
-                mkdir -p /tmp/html
-                cp index.html /tmp/html/
-                ...
+                sh mkdir -p /tmp/html cp index.html /tmp/html/
             }
         }
     }
