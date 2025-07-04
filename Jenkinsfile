@@ -13,7 +13,12 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                sh mkdir -p /tmp/html cp index.html /tmp/html
+                script {
+                    // Ensure the destination directory exists
+                    sh 'mkdir -p /tmp/html'
+                    // Copy the index.html file to the destination
+                    sh 'cp index.html /tmp/html/'
+                }
             }
         }
     }
