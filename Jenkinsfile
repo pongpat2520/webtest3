@@ -17,20 +17,18 @@ pipeline {
                 echo "No build step for static site"
             }
         }
-        stage('Run Docker Container') {
+
+        stage('Prepare Deployment') {
             steps {
-                bat 'docker rm -f my-web || exit 0'
-                bat 'docker run -d --name my-web -p 8888:80 my-web-cicd'
+                sh 'mkdir -p /tmp/html'
+                sh 'cp index.html /tmp/html/'
             }
         }
-        stage('Deploy') {
+
+        stage('Run Docker Container') {
             steps {
-                script {
-                    // Ensure the destination directory exists
-                    sh 'mkdir -p /tmp/html'
-                    // Copy the index.html file to the destination
-                    sh 'cp index.html /tmp/html/'
-                }
+                sh 'docker rm -f my-web || true'
+                sh 'docker run -d --name my-web -p 8888:80 -v /tmp/html:/usr/share/nginx/html:ro nginx'
             }
         }
     }
